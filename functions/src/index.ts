@@ -32,7 +32,14 @@ import { PDFParse } from "pdf-parse";
 // functions should each use functions.runWith({ maxInstances: 10 }) instead.
 // In the v1 API, each function can only serve one request per container, so
 // this will be the maximum concurrent request count.
-setGlobalOptions({ maxInstances: 10 });
+const allowedOrigins = [
+  "https://ai-flashcards-generator.firebaseapp.com",
+  "https://ai-flashcards-generator.web.app",
+];
+
+setGlobalOptions({
+  maxInstances: 10,
+});
 
 const generateFlashCards = async (content: string) => {
   // model schemas can be used to validate the response from the model and ensure that it is in the expected format.
@@ -48,7 +55,7 @@ const generateFlashCards = async (content: string) => {
 
   // create a genkit instance and specify the plugins to use. In this case, we are using the googleAI plugin to access Google's language models.
   const ai = genkit({
-    plugins: [googleAI()],
+    plugins: [googleAI({ apiKey: "YOUR_GEMINI_API_KEY" })],
   });
 
   // create the prompt flow and specify the input and output schemas for validation.
@@ -80,7 +87,9 @@ const generateFlashCards = async (content: string) => {
 };
 
 export const createFlashCards = onRequest(
-  { secrets: ["GOOGLE_GENAI_API_KEY"] },
+  {
+    cors: allowedOrigins,
+  },
   async (request, response) => {
     // Ensure we're handling POST requests with multipart/form-data
     if (request.method !== "POST") {
