@@ -38,7 +38,8 @@ const allowedOrigins = [
 ];
 
 setGlobalOptions({
-  maxInstances: 10,
+  maxInstances: 5,
+  region: "asia-southeast1",
 });
 
 const generateFlashCards = async (content: string) => {
@@ -55,7 +56,7 @@ const generateFlashCards = async (content: string) => {
 
   // create a genkit instance and specify the plugins to use. In this case, we are using the googleAI plugin to access Google's language models.
   const ai = genkit({
-    plugins: [googleAI({ apiKey: "YOUR_GEMINI_API_KEY" })],
+    plugins: [googleAI()],
   });
 
   // create the prompt flow and specify the input and output schemas for validation.
@@ -89,6 +90,7 @@ const generateFlashCards = async (content: string) => {
 export const createFlashCards = onRequest(
   {
     cors: allowedOrigins,
+    secrets: ["GEMINI_API_KEY"],
   },
   async (request, response) => {
     // Ensure we're handling POST requests with multipart/form-data
