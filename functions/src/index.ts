@@ -38,7 +38,8 @@ const allowedOrigins = [
 ];
 
 setGlobalOptions({
-  maxInstances: 10,
+  maxInstances: 5,
+  region: "asia-southeast1",
 });
 
 const generateFlashCards = async (content: string) => {
@@ -89,6 +90,7 @@ const generateFlashCards = async (content: string) => {
 export const createFlashCards = onRequest(
   {
     cors: allowedOrigins,
+    // secrets: ["GEMINI_API_KEY"],
   },
   async (request, response) => {
     // Ensure we're handling POST requests with multipart/form-data
