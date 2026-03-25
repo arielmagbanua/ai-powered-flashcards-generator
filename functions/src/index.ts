@@ -56,7 +56,7 @@ const generateFlashCards = async (content: string) => {
 
   // create a genkit instance and specify the plugins to use. In this case, we are using the googleAI plugin to access Google's language models.
   const ai = genkit({
-    plugins: [googleAI()],
+    plugins: [googleAI({ apiKey: "YOUR_GEMINI_API_KEY" })],
   });
 
   // create the prompt flow and specify the input and output schemas for validation.
