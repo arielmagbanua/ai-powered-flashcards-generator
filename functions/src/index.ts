@@ -90,7 +90,7 @@ const generateFlashCards = async (content: string) => {
 export const createFlashCards = onRequest(
   {
     cors: allowedOrigins,
-    secrets: ["GEMINI_API_KEY"],
+    // secrets: ["GEMINI_API_KEY"],
   },
   async (request, response) => {
     // Ensure we're handling POST requests with multipart/form-data
